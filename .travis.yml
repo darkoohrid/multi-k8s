@@ -2,11 +2,15 @@ sudo: required
 services:
   - docker
 before_install:
+  - openssl aes-256-cbc -K $encrypted_9f3b5599b056_key -iv $encrypted_9f3b5599b056_iv -in service-account.json.enc -out service-account.json -d
   # command that will download google SDK 
   - curl https://sdk.cloud.google.com | bash > /dev/null;
   # will look at the default install google directory and will source the file path.bash.inc
   - source $HOME/google-cloud.sdk/path.bash.inc
   # install and update kubectl inside our travis environment
   - gcloud components update kubectl
-  # we will create service-account.json file(soon) and will put our credentials to allow acccess to our gcloud
+  # we will create service-account.json file(soon) and will put our credentials to allow travis acccess to our gcloud
   - gcloud auth activate-service-account --key-file service-account.json
+  - gcloud config set project multi-k8s-347708
+  - gcloud config set compute/zone europe-central2-a
+  - gcloud container clusters get-credentials multi-cluster
