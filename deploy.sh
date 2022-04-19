@@ -13,4 +13,6 @@ docker push darkoohrid/multi-worker:$SHA
 # Apply all configs in k8s folder
 kubectl apply -f k8s
 # Imperatevely set latest images on each deployment
-kubectl set image deployments/server-deployment server=darkoohrid/multi-server
+kubectl set image deployments/server-deployment server=darkoohrid/multi-server:$SHA
+kubectl set image deployments/client-deployment client=darkoohrid/multi-client:$SHA
+kubectl set image deployments/worker-deployment worker=darkoohrid/multi-worker:$SHA
