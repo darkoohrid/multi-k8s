@@ -10,7 +10,7 @@ before_install:
   # command that will download google SDK 
   - curl https://sdk.cloud.google.com | bash > /dev/null;
   # will look at the default install google directory and will source the file path.bash.inc
-  - source $HOME/google-cloud.sdk/path.bash.inc
+  - source $HOME/google-cloud-sdk/path.bash.inc
   # install and update kubectl inside our travis environment
   - gcloud components update kubectl
   # we will create service-account.json file(soon) and will put our credentials to allow travis acccess to our gcloud
@@ -24,11 +24,11 @@ before_install:
   # Build 'test' version of multi-client  Dockerfile.dev
   - docker build -t darkoohrid/react-test -f ./client/Dockerfile.dev ./client
 
-  script:
-    - docker run -e CI=true darkoohrid/react-test npm test
+script:
+  - docker run -e CI=true darkoohrid/react-test npm test
 
-  deploy:
-    provider: script
-    script: bash ./deploy.sh
-    on:
-      branch: master
+deploy:
+  provider: script
+  script: bash ./deploy.sh
+  on:
+    branch: master
